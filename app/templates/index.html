@@ -1,0 +1,107 @@
+  
+{% extends "Library_Base.html" %}    
+
+{% block title %}
+  <title>Tasteless Library</title>
+{% endblock %}
+
+{% block head %}
+  <script src="{{ url_for('static', filename='makeFloor.js') }}"></script>
+{% endblock %}
+
+{% block body %}
+<script type="text/javascript">load()</script>
+
+<form method="POST" class="form" role="form">
+  <script type="text/javascript">
+    $(function(){
+      var cur=[];
+      '{% for title in book_data %}'
+        cur.push({ value: '{{title}}' });
+      '{% endfor %}'
+      $('#autocomplete').autocomplete({
+        source: cur
+      });
+    });
+  </script>
+<div class="container container-main">
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        <div class="container-fluid" style="text-align:center;">
+            {% for category, message in messages %}
+              {% if category == 'error' and loop.index <= 5%}
+                  <div class="row">
+                      <div class="alert alert-danger alert-dismissable fade in">
+                          <button type="button" class="close" data-dismiss="alert" artia-hidden="true">&times;</button>
+                          {{message}}
+                      </div>
+                  </div>
+              {% elif category == 'success' and loop.index <= 5%}
+                  <div class="row">
+                      <div class="alert alert-success alert-dismissable fade in">
+                          <button type="button" class="close" data-dismiss="alert" artia-hidden="true">&times;</button>
+                          {{message}}
+                      </div>
+                  </div>
+              {% elif category == 'info' and loop.index <= 5%}
+                  <div class="row">
+                      <div class="alert alert-info alert-dismissable fade in">
+                          <button type="button" class="close" data-dismiss="alert" artia-hidden="true">&times;</button>
+                          {{message}}
+                      </div>
+                  </div>
+              {% elif loop.index <= 5%}
+                  <div class="row">
+                      <div class="alert alert-warning alert-dismissable fade in">
+                          <button type="button" class="close" data-dismiss="alert" artia-hidden="true">&times;</button>
+                          {{message}}
+                      </div>
+                  </div>
+              {% endif %}
+              {% if loop.index == 6 %}
+                  <div class="row">
+                      <div class="alert alert-info alert-dismissable fade in">
+                          <button type="button" class="close" data-dismiss="alert" artia-hidden="true">&times;</button>
+                          ...
+                      </div>
+                  </div>
+              {% endif %}
+            {% endfor %}
+        </div>
+    {% endif %}
+  {% endwith %}
+  <!-- <div>select search type</div> -->
+  <div class=" search-bar row ">  
+    <div class="container col-md-8 search-bar-container col-centered">
+      <!-- <select name="cars" class='drop_down'>
+        <option value="volvo">Volvo</option>
+        <option value="saab">Saab</option>
+        <option value="fiat">Fiat</option>
+        <option value="audi">Audi</option>
+      </select> -->
+      <div class="input-group add-on">
+       {{ form.name(class_="form-control",placeholder="Search",list="characters",id="autocomplete")}}
+        <div class="input-group-btn">
+          <button class="btn btn-default" type="submit" onclick="locateShelf()" value='{{form.submit.data}}' name='{{form.submit.name}}'><i class="glyphicon glyphicon-search"></i></button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class=" canvas row">
+    <div class=" canvas-container container col-sm-8 col-centered">
+      <div class="container-canvas">
+        <canvas id="floorCanvas" width="800" height="600"></canvas>
+        <div id="info_obj" class="info_card card_shadow" style="left: 0px; top: 0px; display: none;"> <p> </p></div>
+      </div>
+    </div>
+   <div class=" slider col-sm-4 col-centered ">
+      <ul class="pagination pagination-div" style="vertical-align:top">
+        <li><a href="#">E</a></li>
+        <li><a href="#">1</a></li>
+        <li><a href="#">2</a></li>
+        <li><a href="#">3</a></li>
+      </ul>
+    </div>
+  </div>
+</form>
+{% endblock %}

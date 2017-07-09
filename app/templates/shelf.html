@@ -1,0 +1,27 @@
+{% extends "Library_Base.html" %}    
+
+{% block title %}
+  <title>Tasteless Library</title>
+{% endblock %}
+
+{% block head %}
+  <script src="../static/makeShelf.js"></script>
+{% endblock %}
+
+{% block body %}
+<script language="javascript" shelf="{{shelf_name}}" book ="{{book}}" >load();</script>
+
+  <div class="container container-main">
+    <div class=" canvas row">
+      <div class=" canvas-container container col-sm-8 col-centered">
+        <div class="container-canvas">
+          <canvas id="floorCanvas" width="600" height="600"></canvas>
+              <div id="info_obj" class="info_card card_shadow" style="left: 0px; top: 0px; display: none;"> <p> </p></div>
+              <div id="info" class="info_card card_shadow" style="left: 0px; top: 0px; display: none;"> <p> </p></div>
+        </div>
+      </div>  
+    </div>
+  </div>
+{% endblock %}	
+    
+	
