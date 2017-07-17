@@ -1,4 +1,4 @@
-  
+
 {% extends "Library_Base.html" %}    
 
 {% block title %}
@@ -9,18 +9,32 @@
 {% endblock %}
 
 {% block body %}
+<script type="text/javascript"> var stage; </script>
 <script type="text/javascript">
   function load() {
     var data;
-
-    localStorage.setItem('testObject', JSON.stringify('abkc'));
+     var bookName = '{{book_name}}';
+    
     $.getJSON("../static/data.json", function(data) {
         console.log("My data: " + data["features"]);
         localStorageCabinet(data);
+        
+        // execute floor making if the search do not has a book, else persist the previous canvas
+      
         buildCanvas(data);
+        
         // saving cabinet data in local storage
     })  
 }
+
+var refreshView = function(cabinet_id, shelf_id) {
+  cabinetSearched = cabinet_id;
+  shelfSearched = shelf_id;
+  load();
+};
+
+// storing the value of each cabinet.
+// object in the form of : {cabinet_num: "1", shelf_num: "1", category: "HCI", start: "A", end: "G"}
 var localStorageCabinet = function(data) {
   window.localStorage.clear();
   for (var i = 0; i < data.features.length; i++) {
@@ -37,9 +51,10 @@ var localStorageCabinet = function(data) {
 
 };
 var hoverObjects = [];
-var stage; 
+
 var data;
 var canvas;
+var cabinetSearched, shelfSearched;
 var buildCanvas = function(data) {
     canvas = document.getElementById("floorCanvas");
     stage = new createjs.Stage(canvas);
@@ -74,7 +89,13 @@ var buildCanvas = function(data) {
            
             polygon.graphics.moveTo(geometry.coordinates[0][0], geometry.coordinates[0][1]);
             polygon.graphics.setStrokeStyle(0.5).beginStroke("rgba(0,0,0,1)");
-            polygon.graphics.beginFill("#034f84");
+            if(cabinetSearched == data.features[i].cabinet_num) {
+              polygon.graphics.beginFill("#ff0000");
+            }
+            else {
+               polygon.graphics.beginFill("#034f84");
+            }
+           
             for( var j = geometry.coordinates.length -1; j >= 0; j--) {
              polygon.graphics.lineTo(geometry.coordinates[j][0], geometry.coordinates[j][1]);
             }
@@ -144,8 +165,26 @@ function handleMouseOut(event) {
 
 
 // TODO
+// searching the local storage database and matching every shelf category to the book's category.
+// upon finding the cabinet and shelf, the cabinet is highlighted with a different color.
+// parsing this object : {cabinet_num: "1", shelf_num: "1", category: "HCI", start: "A", end: "G"}
+// and get the cabinet and shelf number of the book
 function locateShelf() {
-   
+   var bookName = '{{book_name}}';
+   var category = '{{book_category}}';
+   for (var i = 0; i < localStorage.length; i++) {
+      var key = localStorage.key(i);
+      var value = localStorage[key];
+      var obj = JSON.parse(value);
+      if(obj.category == category) {
+        var b = bookName.charAt(0);
+        if((obj.start <= bookName.charAt(0)) && (bookName.charAt(0) <= obj.end )) {
+            refreshView(obj.cabinet_num, obj.shelf_num);
+        }
+      }
+
+   };
+  
 }
 
 </script>
@@ -238,10 +277,11 @@ function locateShelf() {
     </div>
   </div>
 
-  {% if searched == True %}4
-  <script type="text/javascript">locateShelf()</script>
-{% endif %}
 </form>
 
-
+{% if searched == True %}
+  <script type="text/javascript">locateShelf()</script>
+  <!-- you  can access book name as {{book_name}} in html and as '{{book_name}}' in java script and for book category  use {{book_category}} in html and with quotes in javascript-->
+    
+{% endif %}
 {% endblock %}

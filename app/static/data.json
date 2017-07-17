@@ -11,10 +11,29 @@
           "fillColor": "#42f483",
           "shelf": [
             
-              {"shelf_num" : "1", "category": "HCI", "start" :"A", "end":"Z"},
+              {"shelf_num" : "1", "category": "HCI", "start" :"A", "end":"J"},
               {"shelf_num" : "2", "category": "CS", "start" :"E", "end":"G"},
               {"shelf_num" : "3", "category": "CS", "start" :"A", "end":"D"},
               {"shelf_num" : "4", "category": "CS", "start" :"H", "end":"Z"}
+            
+            
+          ]
+        }
+      },
+     { 
+        "object": "Cabinet",
+        "cabinet_num":"2",                                                             
+        "geometry": {
+          "coordinates": [[400.0, 10.0], [700.0,10.0], [700.0,50.0], [400.0, 50.0]]
+        },
+        "properties": {
+          "fillColor": "#42f483",
+          "shelf": [
+            
+              {"shelf_num" : "1", "category": "HCI", "start" :"K", "end":"Z"},
+              {"shelf_num" : "2", "category": "EE", "start" :"A", "end":"Z"},
+              {"shelf_num" : "3", "category": "Math", "start" :"A", "end":"Z"},
+              {"shelf_num" : "4", "category": "Apple", "start" :"A", "end":"Z"}
             
             
           ]
