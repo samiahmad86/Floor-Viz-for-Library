@@ -229,10 +229,12 @@ function locateShelf() {
     </div>
   </div>
 
-  {% if searched == True %}
-  <script type="text/javascript">locateShelf()</script>
-{% endif %}
+
 </form>
 
-
+{% if searched == True %}
+  <script type="text/javascript">locateShelf()</script>
+  <!-- you  can access book name as {{book_name}} in html and as '{{book_name}}' in java script and for book category  use {{book_category}} in html and with quotes in javascript-->
+    
+{% endif %}
 {% endblock %}
