@@ -13,15 +13,16 @@ def index():
 	form=book_form()
 	data = models.Books_Data.query.all()
 	ar=[]
-	searched=False
+	searched =False
 	for title in data:
-		ar.append(title.Title)
+		ar.append(str(title.Title))
+		
 	if(form.submit.data):
-			searched=True
 			book_found=False
 			col=models.Books_Data.query.filter_by(Title=str(form.name.data)).first()
 			if(col is not None):
 				book_found=True
+				searched=True
 			if(book_found==False):
 				flash("Book name "+str(form.name.data)+" does not exist in the Library")
 
@@ -30,7 +31,6 @@ def index():
 @app.route('/shelf', methods=['GET', 'POST'])
 def shelf():
 	book=request.form.get('book')
-	col=models.Books_Data.query.filter_by(Title=str(book)).first()
 	shelf_name=request.form.get('shelf_name')
 	return render_template('shelf.html',book=book,shelf_name=shelf_name)
 

@@ -18,12 +18,13 @@
 	    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 	    <!-- Custom styles for this template -->
 	    <link rel="stylesheet" href="../static/floorCss.css">
+	    <!-- <script src="{{ url_for('static', filename='jquery-ui.css') }}"></script>  -->
 	    <!-- <script  src="../static/makeFloor.js"></script> -->
 	    <!-- <script  src="../static/makeShelf.js"></script> -->
 	    
 	    <!-- <script src="{{ url_for('static', filename='makeFloor.js') }}"></script> -->
 	    <!-- <script src="{{ url_for('static', filename='makeShelf.js') }}"></script> -->
-		
+		<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
   		<script type="text/javascript" src="../static/js/jquery-1.9.1.min.js"></script>
   		<script type="text/javascript" src="../static/js/jquery.autocomplete.min.js"></script>
   		
@@ -49,7 +50,7 @@
 	    </nav> 
 	</head>
 
-	<body>
+	<body background="../static/03.png">
 	<!-- load floor map -->
 		{% block body %}{% endblock %}
 	</body>
