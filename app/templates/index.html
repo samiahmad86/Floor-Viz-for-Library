@@ -12,12 +12,30 @@
 <script type="text/javascript">
   function load() {
     var data;
+
+    localStorage.setItem('testObject', JSON.stringify('abkc'));
     $.getJSON("../static/data.json", function(data) {
         console.log("My data: " + data["features"]);
+        localStorageCabinet(data);
         buildCanvas(data);
+        // saving cabinet data in local storage
     })  
 }
+var localStorageCabinet = function(data) {
+  window.localStorage.clear();
+  for (var i = 0; i < data.features.length; i++) {
+    var cabinet_num = data.features[i].cabinet_num;
+    for (var j = 0; j < data.features[i].properties.shelf.length; j++) {
+      var shelf_num = data.features[i].properties.shelf[j].shelf_num;
+      var category = data.features[i].properties.shelf[j].category;
+      var start = data.features[i].properties.shelf[j].start;
+      var end = data.features[i].properties.shelf[j].end;
+      var obj = { cabinet_num: cabinet_num, shelf_num: shelf_num, category: category, start: start, end: end};
+      localStorage.setItem(cabinet_num + "-" + shelf_num, JSON.stringify(obj));
+    };
+  };
 
+};
 var hoverObjects = [];
 var stage; 
 var data;
@@ -49,32 +67,34 @@ var buildCanvas = function(data) {
 
   for(var i = 0; i < data.features.length ; i++ ) {
     var geometry = data.features[i].geometry;
-        var property = data.features[i].properties;
-    if(geometry.type == "Line") {
-      ctx.moveTo(geometry.coordinates[0][0], geometry.coordinates[0][1]);
-      for( var j =1; j < geometry.coordinates.length; j++) {
-        ctx.lineTo(geometry.coordinates[j][0], geometry.coordinates[j][1]); 
-      }
-      ctx.stroke(); 
-    }
-     if(geometry.type == "FilledRectangle") {
+    var property = data.features[i].properties;
+
+     
             var polygon = new createjs.Shape();
            
             polygon.graphics.moveTo(geometry.coordinates[0][0], geometry.coordinates[0][1]);
             polygon.graphics.setStrokeStyle(0.5).beginStroke("rgba(0,0,0,1)");
             polygon.graphics.beginFill("#034f84");
-      for( var j = geometry.coordinates.length -1; j >= 0; j--) {
-       polygon.graphics.lineTo(geometry.coordinates[j][0], geometry.coordinates[j][1]);
+            for( var j = geometry.coordinates.length -1; j >= 0; j--) {
+             polygon.graphics.lineTo(geometry.coordinates[j][0], geometry.coordinates[j][1]);
             }
             polygon.graphics.endFill();
-            polygon.name = property.name;
+            polygon.name = data.features[i].cabinet_num;
             stage.addChild(polygon);
-            hoverObjects.push([property.name, property.desc]);
+            var desc = [];
+            for( var k = 0; k<data.features[i].properties.shelf.length; k++) {
+              desc.push(data.features[i].properties.shelf[k].category);
+            }
+            var arr = desc.filter( function( item, index, inputArray ) {
+            return inputArray.indexOf(item) == index;
+            });
+
+            hoverObjects.push([data.features[i].cabinet_num, arr]);
 
             polygon.addEventListener("mouseover", handleMouseOver);
             polygon.addEventListener("mouseout", handleMouseOut);
             polygon.addEventListener("click", handleMouseClick);
-    }
+    
   }
     stage.scaleX = stage.scaleY = 0.7;
     stage.update();
@@ -125,18 +145,7 @@ function handleMouseOut(event) {
 
 // TODO
 function locateShelf() {
-    stage.removeChild(stage.children[2]);
-    var polygon = new createjs.Shape();
-    polygon.graphics.setStrokeStyle(0.5).beginStroke("rgba(0,0,0,1)");
-    polygon.graphics.beginFill("#ffe41c");
-    polygon.graphics.moveTo(10, 10);
-    polygon.graphics.lineTo(200, 10);
-    polygon.graphics.lineTo(200, 50);
-    polygon.graphics.lineTo(10, 50);
-    polygon.graphics.lineTo(10, 10);
-    polygon.graphics.endFill();
-    stage.addChild(polygon);
-    stage.update();
+   
 }
 
 </script>
@@ -229,7 +238,7 @@ function locateShelf() {
     </div>
   </div>
 
-  {% if searched == True %}
+  {% if searched == True %}4
   <script type="text/javascript">locateShelf()</script>
 {% endif %}
 </form>

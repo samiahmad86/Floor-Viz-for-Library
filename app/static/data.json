@@ -1,74 +1,24 @@
 { 
     "features": [
-  	   
-       {
-        "object": "Floor",
-        "geometry": {                                                                        
-          "type": "FilledRectangle",
-          "coordinates": [[0.0, 0.0], [5.0, 5.0], [10.0, 10.0], [15.0, 15.0]]
-        },
-        "properties": {
-          "stroke": "#000",
-          "fill": "#fff"
-        }
-      },
-
+      
       { 
-        "object": "Shelf",                                                                 
+        "object": "Cabinet",
+        "cabinet_num":"1",                                                             
         "geometry": {
-          "type": "FilledRectangle",
           "coordinates": [[10.0, 10.0], [200.0,10.0], [200.0,50.0], [10.0, 50.0]]
         },
         "properties": {
-          "fill": "#42f483",
-          "name": "shelf_one",
-          "desc": "Category - Computer Science",
-          "rows": [
-              {"shelf_num" : "1", "key" :"ABCDEFGH"},
-              {"shelf_num" : "2", "key" :"IJKLMN"}
+          "fillColor": "#42f483",
+          "shelf": [
             
-          ]
-        }
-      },
-
-
-      { 
-        "object": "Shelf",                                                                
-        "geometry": {
-          "type": "FilledRectangle",
-          "coordinates": [[600.0, 100.0], [800.0,100.0], [800.0,150.0], [600.0, 150.0]]
-        },
-        "properties": {
-          "fill": "#42f483",
-          "name": "shelf_two",
-          "desc": "Category - Informatics",
-          "rows": [
-              {"shelf_num" : "1", "key" :"ABCDEFGH"},
-              {"shelf_num" : "2", "key" :"IJKLMN"},
-              {"shelf_num" : "3", "key" :"OPR"}
+              {"shelf_num" : "1", "category": "HCI", "start" :"A", "end":"Z"},
+              {"shelf_num" : "2", "category": "CS", "start" :"E", "end":"G"},
+              {"shelf_num" : "3", "category": "CS", "start" :"A", "end":"D"},
+              {"shelf_num" : "4", "category": "CS", "start" :"H", "end":"Z"}
             
-          ]
-        }
-      },
-      { 
-        "object": "Shelf",                                                                
-        "geometry": {
-          "type": "FilledRectangle",
-          "coordinates": [  [200.0, 550.0], [490.0, 550.0], [490.0, 590.0], [200.0, 590.0] ]
-        },
-        "properties": {
-          "fill": "#42f483",
-          "name": "shelf_three",
-          "desc": "Category - HCI",
-          "rows": [
-              {"shelf_num" : "1", "key" :"ABC"},
-              {"shelf_num" : "2", "key" :"DEFG"},
-              {"shelf_num" : "3", "key" :"XYZ"}
             
           ]
         }
       }
-
-     
    ]
  }

@@ -15,11 +15,11 @@ def index():
 	ar=[]
 	searched =False
 	for title in data:
-		ar.append(str(title.Title))
+		ar.append(title.Title)
 		
 	if(form.submit.data):
 			book_found=False
-			col=models.Books_Data.query.filter_by(Title=str(form.name.data)).first()
+			col=models.Books_Data.query.filter_by(Title=form.name.data).first()
 			if(col is not None):
 				book_found=True
 				searched=True
