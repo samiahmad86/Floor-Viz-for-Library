@@ -1,38 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-		<!-- <meta http-equiv="Content-Type" content="text/html; charset=utf-8"> -->
-		<!-- <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"> -->
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	    <meta name="viewport" content="width=device-width, initial-scale=1">
-	    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-	    <!-- <meta name="description" content=""> -->
-	    <!-- <meta name="author" content=""> -->
-		{% block title %}{% endblock %}
-		<!-- Bootstrap core CSS -->
+	    {% block title %}{% endblock %}
 		<script src="{{ url_for('static', filename='jquery.js') }}"></script> <!-- 2.1.4 -->
 	    <script src="{{ url_for('static', filename='bootstrap.js') }}"></script>
 	    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 	    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 	    <script src="https://code.createjs.com/easeljs-0.8.2.min.js"></script>
 	    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-	    <!-- Custom styles for this template -->
 	    <link rel="stylesheet" href="../static/floorCss.css">
-	    <!-- <script src="{{ url_for('static', filename='jquery-ui.css') }}"></script>  -->
-	    <!-- <script  src="../static/makeFloor.js"></script> -->
-	    <!-- <script  src="../static/makeShelf.js"></script> -->
-	    
-	    <!-- <script src="{{ url_for('static', filename='makeFloor.js') }}"></script> -->
-	    <!-- <script src="{{ url_for('static', filename='makeShelf.js') }}"></script> -->
 		<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
   		<script type="text/javascript" src="../static/js/jquery-1.9.1.min.js"></script>
   		<script type="text/javascript" src="../static/js/jquery.autocomplete.min.js"></script>
-  		
   		<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
   		<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-  		<!-- <link rel="stylesheet" href="/resources/demos/style.css"> -->
-	    {% block head %}{% endblock %}
-	    <!-- navigation bar--> 
+  		{% block head %}{% endblock %}
 	    <nav class="navbar navbar-inverse navbar-fixed-top">
 	      <div class="container">
 	        <div class="navbar-header">
@@ -50,7 +34,7 @@
 	    </nav> 
 	</head>
 
-	<body background="../static/03.png">
+	<body>
 	<!-- load floor map -->
 		{% block body %}{% endblock %}
 	</body>

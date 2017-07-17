@@ -1,4 +1,15 @@
+body{
+  background-image:url(../static/flip.jpg);
 
+   background-repeat:no-repeat;
+
+   background-size:cover;
+}
+
+canvas{
+  /*background-color: #3b3a30;*/
+  background-image: url(../static/3.jpg);
+}
 .container-main {
                 margin-top: 75px;
 
