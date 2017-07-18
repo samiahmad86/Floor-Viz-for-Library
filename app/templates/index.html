@@ -61,7 +61,7 @@ var buildCanvas = function(data) {
     data = data;
    
     var rect = new createjs.Shape();
-    rect.graphics.setStrokeStyle(0.2).beginStroke("rgba(0,0,0,1)").drawRect(2, 2, 1000, 600);
+    rect.graphics.setStrokeStyle(0.2).beginFill("#fff").beginStroke("rgba(0,0,0,1)").drawRect(2, 2, 1000, 600);
     stage.addChild(rect);
     stage.enableMouseOver(20); 
 
@@ -91,6 +91,7 @@ var buildCanvas = function(data) {
             polygon.graphics.setStrokeStyle(0.5).beginStroke("rgba(0,0,0,1)");
             if(cabinetSearched == data.features[i].cabinet_num) {
               polygon.graphics.beginFill("#ff0000");
+            
             }
             else {
                polygon.graphics.beginFill("#034f84");
@@ -125,20 +126,29 @@ function handleMouseClick(event) {
     var form = document.createElement("form");
     input1 = document.createElement("input");
     input2 = document.createElement("input");
+    input3 = document.createElement("input");
+    
     form.action = "/shelf";
     form.method = "post"
+    
     input1.type = "hidden";
-    input1.name = "shelf_name";
+    input1.name = "cabinet_num";
     input1.value = event.currentTarget.name;
+    
     input2.type = "hidden";
     input2.name = "book";
     input2.value = bookName;
-    form.appendChild(input1).appendChild(input2);
-    document.body.appendChild(form);
-    form.submit();
-    event.currentTarget.name; // this is the shelf_name which we get when clicked
-}
 
+    input3.type = "hidden";
+    input3.name = "shelf_num";
+    input3.value = shelfSearched;
+    
+    form.appendChild(input1).appendChild(input2).appendChild(input3);
+        document.body.appendChild(form);
+        form.submit();
+        event.currentTarget.name; // this is the shelf_name which we get when clicked
+    }
+    
 
 
 
@@ -267,14 +277,14 @@ function locateShelf() {
         <div id="info_obj" class="info_card card_shadow" style="left: 0px; top: 0px; display: none;"> <p> </p></div>
       </div>
     </div>
-   <div class=" slider col-sm-4 col-centered ">
+   <!-- <div class=" slider col-sm-4 col-centered ">
       <ul class="pagination pagination-div" style="vertical-align:top">
         <li><a href="#">E</a></li>
         <li><a href="#">1</a></li>
         <li><a href="#">2</a></li>
         <li><a href="#">3</a></li>
       </ul>
-    </div>
+    </div> -->
   </div>
 
 </form>

@@ -23,13 +23,16 @@ def index():
 			book_found=False
 
 			col=models.Books_Data.query.filter_by(Title=str(form.name.data)).first()
-			name=str(col.Title)
-			category=str(col.Category)
-			print(category)
+
 			if(col is not None):
 				book_found=True
 				searched=True
-			if(book_found==False):
+				name=str(col.Title)
+				category=str(col.Category)
+				print(category)
+			if(col is  None):
+				flash("Please enter a book name")
+			elif(book_found==False):
 				flash("Book name "+str(form.name.data)+" does not exist in the Library")
 
 	return render_template('index.html',form=form,book_data=ar,searched=searched,book_name=name,book_category=category)
@@ -37,8 +40,9 @@ def index():
 @app.route('/shelf', methods=['GET', 'POST'])
 def shelf():
 	book=request.form.get('book')
-	shelf_name=request.form.get('shelf_name')
-	return render_template('shelf.html',book=book,shelf_name=shelf_name)
+	cabinet_num = request.form.get('cabinet_num')
+	shelf_num = request.form.get('shelf_num')
+	return render_template('shelf.html',book=book,cabinet_num = cabinet_num, shelf_num = shelf_num)
 
 @app.route('/test', methods=['GET', 'POST'])
 def test():

@@ -1,5 +1,5 @@
 body{
-  background-image:url(../static/flip.jpg);
+  background-image:url(../static/03.png);
 
    background-repeat:no-repeat;
 
@@ -7,8 +7,8 @@ body{
 }
 
 canvas{
-  /*background-color: #3b3a30;*/
-  background-image: url(../static/3.jpg);
+ /* background-color: #fff;*/
+  /*background-image: url(../static/3.jpg);*/
 }
 .container-main {
                 margin-top: 75px;
