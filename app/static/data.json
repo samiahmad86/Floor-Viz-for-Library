@@ -1,6 +1,19 @@
 { 
     "features": [
-      
+      { 
+        "object": "Floor",
+        "properties": {
+          "length": "1000",
+          "breadth": "1000"
+        }
+      },
+      { 
+        "object": "CurrentPosition",
+        "properties": {
+          "x": "500",
+          "y": "500"
+        }
+      },  
       { 
         "object": "Cabinet",
         "cabinet_num":"1",                                                             
@@ -14,7 +27,7 @@
               {"shelf_num" : "2", "category": "CS", "start" :"E", "end":"G"},
               {"shelf_num" : "3", "category": "CS", "start" :"A", "end":"D"},
               {"shelf_num" : "4", "category": "CS", "start" :"H", "end":"Z"}
-            
+
             
           ]
         }
@@ -23,7 +36,7 @@
         "object": "Cabinet",
         "cabinet_num":"2",                                                             
         "geometry": {
-          "coordinates": [[400.0, 10.0], [700.0,10.0], [700.0,50.0], [400.0, 50.0]]
+          "coordinates": [[400.0, 10.0], [1000.0,10.0], [1000.0,50.0], [400.0, 50.0]]
         },
         "properties": {
           "shelf": [
@@ -31,7 +44,7 @@
               {"shelf_num" : "1", "category": "HCI", "start" :"K", "end":"Z"},
               {"shelf_num" : "2", "category": "EE", "start" :"A", "end":"Z"},
               {"shelf_num" : "3", "category": "Math", "start" :"A", "end":"Z"},
-              {"shelf_num" : "4", "category": "Apple", "start" :"A", "end":"Z"}
+              {"shelf_num" : "4", "category": "Apple", "start" :"A", "end":"D"}
             
             
           ]

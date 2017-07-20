@@ -22,8 +22,11 @@ var stage;
 var data;
 var canvas;
 var cabinetSearched ='{{cabinet_num}}';
+var cabinetSearchedBook ='{{cabinet_num_w_book}}';
 var bookName = '{{book}}';
 var shelfNum = '{{shelf_num}}';
+var bookCanvas = [];
+var bookEachShelf = [];
 var buildCanvas = function(data) {
     canvas = document.getElementById("floorCanvas");
     stage = new createjs.Stage(canvas);
@@ -63,8 +66,24 @@ var buildCanvas = function(data) {
                          // traversing each shelf
                          var rcount = 1;
                          var randomWidth =0;
-                         text = new createjs.Text(property.shelf[k-1].start + " - " + property.shelf[k-1].end, "20px Arial", "#ff7700");
+                        // text = new createjs.Text(property.shelf[k-1].start + " - " + property.shelf[k-1].end, "20px Arial", "#ff7700")
+                         text = "";
                          text.x = 450;
+
+                         var iDiv = document.createElement('div');
+                         iDiv.innerHTML = property.shelf[k-1].category + ":  \t  \t \t\n     " + property.shelf[k-1].start + " - " + property.shelf[k-1].end;
+                         iDiv.style.position = "absolute";
+                         iDiv.style.left = 800+ 'px';
+                         iDiv.className = 'info_card';
+                         document.getElementsByTagName('body')[0].appendChild(iDiv);
+
+
+                         if(+shelfNum === k) {
+                            iDiv.style.background = "#ff0"; 
+                         }
+                       
+
+
                         for(var l = initial_x; (l + randomWidth) < shelfWidth; l=l+randomWidth) {
                             var maxHeight = rowHeight / 1.5;
                         var minHeight = rowHeight / 2;
@@ -78,22 +97,55 @@ var buildCanvas = function(data) {
 
                          
                          text.y = initial_y + rowHeight * k - rowHeight/2;
+                         iDiv.style.top = initial_y + rowHeight * k - rowHeight/2+'px';
+                         
                          text.textBaseline = "alphabetic";
                             var polygon = new createjs.Shape();
                             polygon.graphics.setStrokeStyle(1)
                                 .beginStroke("rgba(255,255,255,0.5)")
                                 .beginFill(color).drawRect(initial_x + l, (initial_y + rowHeight * k - randomHeight ) , randomWidth, randomHeight);
                            
-                            rcount ++;
+                           
                            stage.addChild(polygon); 
-                          
+                           bookCanvas.push({count:rcount, polygon:polygon, shelf:k});
+                           rcount ++;
                         }
-                        stage.addChild(text);
+                        bookEachShelf.push({row:k, count: rcount});
+                       // stage.addChild(text);
+
+
+                        if((cabinetSearchedBook== cabinetSearched) && (shelfNum === k.toString())) {
+                            var start = property.shelf[k-1].start.charCodeAt(0);
+                            var end = property.shelf[k-1].end.charCodeAt(0);
+                            var range = end - start;
+                            var bookNameChar = bookName.charCodeAt(0);
+                            var offSet = Math.ceil(bookNameChar - start + 1);
+                            var count = 0;
+                            var booksEachRange = Math.ceil(rcount / range);
+                             for (var b = 0; b < bookCanvas.length; b++) {
+                                if(bookCanvas[b].shelf == k) {
+                                        count ++;
+                                        if(count >= booksEachRange * offSet) {
+                                            for (var inner = 0; inner < booksEachRange; inner++) {
+                                                var p = bookCanvas[b+inner].polygon;
+                                              // p.graphics.clear();
+                                               p.alpha = 0.1;
+                                                stage.update();
+                                            };
+                                            break;
+                                        }
+                                }
+                             };
+
+
+                        
+                        }
 
                    
                         stage.update();
 
                     }
+
                     // var polygon = new createjs.Shape();
                     // polygon.graphics.setStrokeStyle(3)
                     //     .beginStroke("rgba(0,0,0,1)")
@@ -124,12 +176,9 @@ function shelfHasBook (shelf_num) {
 };
 
 function getRandomColor() {
-  var letters = '0123456789ABCDEF';
-  var color = '#';
-  for (var i = 0; i < 6; i++) {
-    color += letters[Math.floor(Math.random() * 16)];
-  }
-  return color;
+ var colorList = ['#1A237E','#0D47A1','#00695C','#B71c1c','#F57F17','#3E2723','#1A237E','#0D47A1','#00695C','#B71c1c','#F57F17','#3E2723'];
+  var random = Math.floor(Math.random() * (11 - 0) + 0);
+  return colorList[random];
 }
 function handleMouseOver(event) {
     var d = document.getElementById('info_obj');
