@@ -31,6 +31,7 @@ var refreshView = function(cabinet_id, shelf_id) {
   cabinetSearched = cabinet_id;
   shelfSearched = shelf_id;
   load();
+
 };
 
 // storing the value of each cabinet.
@@ -38,6 +39,7 @@ var refreshView = function(cabinet_id, shelf_id) {
 var localStorageCabinet = function(data) {
   window.localStorage.clear();
   for (var i = 0; i < data.features.length; i++) {
+    if(data.features[i].object === "Cabinet") {
     var cabinet_num = data.features[i].cabinet_num;
     for (var j = 0; j < data.features[i].properties.shelf.length; j++) {
       var shelf_num = data.features[i].properties.shelf[j].shelf_num;
@@ -46,34 +48,40 @@ var localStorageCabinet = function(data) {
       var end = data.features[i].properties.shelf[j].end;
       var obj = { cabinet_num: cabinet_num, shelf_num: shelf_num, category: category, start: start, end: end};
       localStorage.setItem(cabinet_num + "-" + shelf_num, JSON.stringify(obj));
-    };
-  };
-
+    }
+  }
+   }
+  
 };
+
+
 var hoverObjects = [];
 
 var data;
 var canvas;
 var cabinetSearched, shelfSearched;
+var heightScale, breadthScale;
 var buildCanvas = function(data) {
     canvas = document.getElementById("floorCanvas");
     stage = new createjs.Stage(canvas);
     data = data;
-   
+    heightScale = 1500/data.features[0].properties.length;
+    breadthScale=1000/data.features[0].properties.breadth;
     var rect = new createjs.Shape();
-    rect.graphics.setStrokeStyle(0.2).beginFill("#fff").beginStroke("rgba(0,0,0,1)").drawRect(2, 2, 1000, 600);
+    rect.graphics.setStrokeStyle(0.2).beginFill("#fff").beginStroke("rgba(0,0,0,1)").drawRect(2, 2, data.features[0].properties.length*heightScale,  data.features[0].properties.breadth*breadthScale);
     stage.addChild(rect);
     stage.enableMouseOver(20); 
 
     var currentLocation = new createjs.Bitmap("../static/location2.png");
     stage.addChild(currentLocation);
-    currentLocation.x = 500;
-    currentLocation.y = 200;
+
+    currentLocation.x = data.features[1].properties.x;
+    currentLocation.y = data.features[1].properties.y;
     currentLocation.name = "my_loc";
     currentLocation.scaleX = .5;
     currentLocation.scaleY = .5;
     currentLocation.image.onload = function() {
-        stage.scaleX = stage.scaleY = 0.7;
+        //stage.scaleX = stage.scaleY = 0.7;
         stage.update();
     };
     currentLocation.addEventListener("mouseover", handleMouseOver);
@@ -84,21 +92,30 @@ var buildCanvas = function(data) {
     var geometry = data.features[i].geometry;
     var property = data.features[i].properties;
 
-     
+      if(data.features[i].object === "Cabinet") {
             var polygon = new createjs.Shape();
            
-            polygon.graphics.moveTo(geometry.coordinates[0][0], geometry.coordinates[0][1]);
+            polygon.graphics.moveTo(geometry.coordinates[0][0]*heightScale, geometry.coordinates[0][1]*breadthScale);
             polygon.graphics.setStrokeStyle(0.5).beginStroke("rgba(0,0,0,1)");
             if(cabinetSearched == data.features[i].cabinet_num) {
-              polygon.graphics.beginFill("#ff0000");
+              polygon.graphics.beginFill("#034f84");
+               var title = document.getElementById('info_obj_title');
+              title.style.display = "block";
+    
+              var d = document.getElementById('info_obj');
+              var p = d.getElementsByTagName('p')[0];
+            
             
             }
             else {
+             
+                polygon.alpha = 0.4;
+            
                polygon.graphics.beginFill("#034f84");
             }
            
             for( var j = geometry.coordinates.length -1; j >= 0; j--) {
-             polygon.graphics.lineTo(geometry.coordinates[j][0], geometry.coordinates[j][1]);
+             polygon.graphics.lineTo(geometry.coordinates[j][0]*heightScale, geometry.coordinates[j][1]*breadthScale);
             }
             polygon.graphics.endFill();
             polygon.name = data.features[i].cabinet_num;
@@ -118,8 +135,9 @@ var buildCanvas = function(data) {
             polygon.addEventListener("click", handleMouseClick);
     
   }
-    stage.scaleX = stage.scaleY = 0.7;
+    stage.scaleX  = stage.scaleY = 0.5;
     stage.update();
+  }
 }
 function handleMouseClick(event) {
     var bookName = document.getElementById('autocomplete').value;
@@ -127,7 +145,8 @@ function handleMouseClick(event) {
     input1 = document.createElement("input");
     input2 = document.createElement("input");
     input3 = document.createElement("input");
-    
+    input4 = document.createElement("input");
+
     form.action = "/shelf";
     form.method = "post"
     
@@ -142,8 +161,12 @@ function handleMouseClick(event) {
     input3.type = "hidden";
     input3.name = "shelf_num";
     input3.value = shelfSearched;
+
+    input4.type = "hidden";
+    input4.name = "cabinet_num_w_book";
+    input4.value = cabinetSearched;
     
-    form.appendChild(input1).appendChild(input2).appendChild(input3);
+    form.appendChild(input1).appendChild(input2).appendChild(input3).appendChild(input4);
         document.body.appendChild(form);
         form.submit();
         event.currentTarget.name; // this is the shelf_name which we get when clicked
@@ -154,23 +177,21 @@ function handleMouseClick(event) {
 
 
 function handleMouseOver(event) {
+    var title = document.getElementById('info_obj_title');
+    title.style.display = "block";
+    
     var d = document.getElementById('info_obj');
-    d.style.position = "absolute";
-    d.style.display = "block";
-    var x =  event.localX  * 0.7;
-    var y =  event.localY * 0.7;
-    d.style.left = x + 50 +'px';
-    d.style.top = y  + 'px';
+    var p = d.getElementsByTagName('p')[0];
+   
     for(var i = 0; i < hoverObjects.length; i++) {
         if(hoverObjects[i][0] == event.currentTarget.name) {
-            d.innerHTML = hoverObjects[i][1];
+            p.innerHTML = hoverObjects[i][1];
         }
     }
 }
 function handleMouseOut(event) {
-    var d = document.getElementById('info_obj');
-    d.style.position = "absolute";
-    d.style.display = "none";
+   var title = document.getElementById('info_obj_title');
+    title.style.display = "none";
 }
 
 
@@ -273,8 +294,8 @@ function locateShelf() {
   <div class=" canvas row">
     <div class=" canvas-container container col-sm-8 col-centered">
       <div class="container-canvas">
-        <canvas id="floorCanvas" width="700" height="425"></canvas>
-        <div id="info_obj" class="info_card card_shadow" style="left: 0px; top: 0px; display: none;"> <p> </p></div>
+        <canvas id="floorCanvas" width="1000" height="600"></canvas>
+     <!--    <div id="info_obj" class="info_card card_shadow" style="left: 0px; top: 0px; display: none;"> <p> </p></div> -->
       </div>
     </div>
    <!-- <div class=" slider col-sm-4 col-centered ">
@@ -285,6 +306,19 @@ function locateShelf() {
         <li><a href="#">3</a></li>
       </ul>
     </div> -->
+    <div class="col-sm-4 col-centered" >
+     <div id="info_obj_title" class="info_card" style="display: none;">
+      <div   class="" >
+        Cabinet Mapping
+      </div>
+      <div  id="info_obj" class="card-block">
+        <blockquote class="card-blockquote">
+          <p> Search your book or hovfer and click over the cabinet to take you through</p>
+         <!--  <footer>Someone famous in <cite title="Source Title">Source Title</cite></footer> -->
+        </blockquote>
+      </div>
+     </div>
+    </div>
   </div>
 
 </form>

@@ -42,7 +42,8 @@ def shelf():
 	book=request.form.get('book')
 	cabinet_num = request.form.get('cabinet_num')
 	shelf_num = request.form.get('shelf_num')
-	return render_template('shelf.html',book=book,cabinet_num = cabinet_num, shelf_num = shelf_num)
+	cabinet_num_w_book = request.form.get('cabinet_num_w_book')
+	return render_template('shelf.html',book=book,cabinet_num = cabinet_num, shelf_num = shelf_num, cabinet_num_w_book = cabinet_num_w_book)
 
 @app.route('/test', methods=['GET', 'POST'])
 def test():
