@@ -3,7 +3,7 @@
 # line, it's possible required libraries won't be in your searchable path
 #
 
-from flaskapp import app as application
+from run import app as application
 
 #
 # Below for testing only
