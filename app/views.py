@@ -31,7 +31,7 @@ def index():
 				category=str(col.Category)
 				print(category)
 			if(col is  None):
-				flash("Please enter a book name")
+				flash("Please enter a book name from the dropdown only")
 			elif(book_found==False):
 				flash("Book name "+str(form.name.data)+" does not exist in the Library")
 

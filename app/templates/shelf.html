@@ -27,6 +27,7 @@ var bookName = '{{book}}';
 var shelfNum = '{{shelf_num}}';
 var bookCanvas = [];
 var bookEachShelf = [];
+var hScale, wScale;
 var buildCanvas = function(data) {
     canvas = document.getElementById("floorCanvas");
     stage = new createjs.Stage(canvas);
@@ -71,44 +72,81 @@ var buildCanvas = function(data) {
                          text.x = 450;
 
                          var iDiv = document.createElement('div');
-                         iDiv.innerHTML = property.shelf[k-1].category + ":  \t  \t \t\n     " + property.shelf[k-1].start + " - " + property.shelf[k-1].end;
+                         if((property.shelf[k-1].category !== undefined) && ((property.shelf[k-1].start !== undefined) && (property.shelf[k-1].end !== undefined))) {
+                           iDiv.innerHTML = property.shelf[k-1].category + ":  \t  \t \t\n     " + property.shelf[k-1].start + " - " + property.shelf[k-1].end;
+                          }
+                          else if(!((property.shelf[k-1].start !== undefined)|| (property.shelf[k-1].end !== undefined)) && (property.shelf[k-1].category !== undefined)) {
+                            iDiv.innerHTML = property.shelf[k-1].category + ": No order";
+                          }
+                          else if((property.shelf[k-1].category === undefined) && ((property.shelf[k-1].start !== undefined) && (property.shelf[k-1].end !== undefined))) {
+                            iDiv.innerHTML = "No Category"+ property.shelf[k-1].start + " - " + property.shelf[k-1].end;
+                          }
+                          else {
+                            iDiv.innerHTML =  " No category defined" +  ": No order";
+                          }
                          iDiv.style.position = "absolute";
-                         iDiv.style.left = 800+ 'px';
+                        // iDiv.style.left = 800+ 'px';
                          iDiv.className = 'info_card';
-                         document.getElementsByTagName('body')[0].appendChild(iDiv);
+                         var body = document.getElementsByTagName('body')[0];
+                         body.children[2].children[0].children[1].appendChild(iDiv); 
 
+                        // adding it to the div with col-4
+                       
+                        // document.getElementsByTagName('body')[0].appendChild(iDiv);
+                         var foundInfo = document.createElement('div1');
 
                          if(+shelfNum === k) {
                             iDiv.style.background = "#ff0"; 
+                         
+                            foundInfo.innerHTML = "Your book is one of those highlighted with yellow";
+                            foundInfo.style.position = "absolute";
+                            foundInfo.style.left = 200+ 'px';
+                            foundInfo.className = 'info_card';
+                            foundInfo.style.background = "#ff0"; 
+                            body.children[2].children[0].children[1].appendChild(foundInfo); 
+
+
+
+
                          }
                        
-
-
-                        for(var l = initial_x; (l + randomWidth) < shelfWidth; l=l+randomWidth) {
-                            var maxHeight = rowHeight / 1.5;
+                        var maxHeight = rowHeight / 1.5;
                         var minHeight = rowHeight / 2;
                         var maxWidth = maxHeight / 1.5;
                         var minWidth = minHeight * 2 / 10;
-                        var color = getRandomColor();
-                        
-                        // var widthBook = shelfWidth / property.books_count[i];
                         var randomHeight = Math.random() * (maxHeight - minHeight) + minHeight;
                         var randomWidth = Math.random() * (maxWidth - minWidth) + minWidth;
 
-                         
+                        var startX = initial_x;
+                        
+
+                        for(var l = initial_x;  startX + randomWidth < shelfWidth;) {
+                       
+                        var color = getRandomColor();
+                        
+                        // var widthBook = shelfWidth / property.books_count[i];
+
+                      
+                        
                          text.y = initial_y + rowHeight * k - rowHeight/2;
-                         iDiv.style.top = initial_y + rowHeight * k - rowHeight/2+'px';
+                         iDiv.style.top = rowHeight * k - rowHeight/2+'px';
+                         foundInfo.style.top =  rowHeight * k - rowHeight/2+'px';
                          
                          text.textBaseline = "alphabetic";
                             var polygon = new createjs.Shape();
                             polygon.graphics.setStrokeStyle(1)
                                 .beginStroke("rgba(255,255,255,0.5)")
-                                .beginFill(color).drawRect(initial_x + l, (initial_y + rowHeight * k - randomHeight ) , randomWidth, randomHeight);
+                                .beginFill(color).drawRect(startX, (initial_y + rowHeight * k - randomHeight ) , randomWidth, randomHeight);
                            
                            
                            stage.addChild(polygon); 
                            bookCanvas.push({count:rcount, polygon:polygon, shelf:k});
                            rcount ++;
+                         startX += randomWidth;
+                         randomHeight = Math.random() * (maxHeight - minHeight) + minHeight;
+                         randomWidth = Math.random() * (maxWidth - minWidth) + minWidth;
+                        // startX += randomWidth;
+
                         }
                         bookEachShelf.push({row:k, count: rcount});
                        // stage.addChild(text);
@@ -129,8 +167,16 @@ var buildCanvas = function(data) {
                                             for (var inner = 0; inner < booksEachRange; inner++) {
                                                 var p = bookCanvas[b+inner].polygon;
                                               // p.graphics.clear();
-                                               p.alpha = 0.1;
-                                                stage.update();
+                                               // p.alpha = 0.1;
+                                               var x =p.graphics.instructions[1].x;
+                                               var y =p.graphics.instructions[1].y;
+                                               var h =p.graphics.instructions[1].h;
+                                               var w =p.graphics.instructions[1].w;
+
+                                             p.graphics.clear().beginFill("#ff0").setStrokeStyle(1).beginStroke("rgba(0,0,0)")
+                                                               .drawRect(x, y, w, h).endFill();
+
+                                              stage.update();
                                             };
                                             break;
                                         }
@@ -235,14 +281,21 @@ function getParameterByName(name, url) {
 load();
 </script>
   <div class="container container-main">
-    <div class=" canvas row">
-      <div class=" canvas-container container col-sm-8 col-centered">
-        <div class="container-canvas">
-          <canvas id="floorCanvas" width="600" height="600"></canvas>
-              <div id="info_obj" class="info_card card_shadow" style="left: 0px; top: 0px; display: none;"> <p> </p></div>
-              <div id="info" class="info_card card_shadow" style="left: 0px; top: 0px; display: none;"> <p> </p></div>
+    <div class="row">
+        <div class="col-md-6">
+          <div class="">
+            <div class="">
+              <canvas id="floorCanvas" width="600" height="600"></canvas>
+               
+                
+            </div>
+          </div>  
         </div>
-      </div>  
+        <div class="col-md-6 col-centered" style = "display: inline-block;" >
+             <div id="info_list" class="info_card card_shadow" style="left: 0px; top: 0px; display: none;"> <p> </p></div>
+             <div id="info_book_found" class="info_card card_shadow" style="left: 0px; top: 0px; display: none;"> <p> </p></div>
+        </div>
+       
     </div>
   </div>
 {% endblock %}	

@@ -18,9 +18,10 @@ canvas{
 
 .info_card {
   background: #fff;
-  border-radius: 0px;
-  display: inline-block;
-  margin: 1rem;
+  border-radius: 5px;
+  margin-left: 20px;
+  
+  word-wrap: break-word;
   position: relative;
   padding: 10px;
 }

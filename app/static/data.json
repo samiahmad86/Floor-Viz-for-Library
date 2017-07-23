@@ -1,52 +1,151 @@
-{ 
+{
     "features": [
-      { 
+      {
         "object": "Floor",
         "properties": {
-          "length": "1000",
-          "breadth": "1000"
+          "width": "1.5",
+          "height": "1"
         }
       },
-      { 
+      {
         "object": "CurrentPosition",
         "properties": {
-          "x": "500",
-          "y": "500"
+          "x": "0.75",
+          "y": "0.25"
         }
-      },  
-      { 
+      },
+      {
         "object": "Cabinet",
-        "cabinet_num":"1",                                                             
+        "cabinet_num":"1",
         "geometry": {
-          "coordinates": [[10.0, 10.0], [200.0,10.0], [200.0,50.0], [10.0, 50.0]]
+          "coordinates": [
+            [0, 0],
+            [0.2125, 0],
+            [0.2125,0.05],
+            [0, 0.05]
+          ]
         },
         "properties": {
           "shelf": [
-            
-              {"shelf_num" : "1", "category": "HCI", "start" :"A", "end":"J"},
-              {"shelf_num" : "2", "category": "CS", "start" :"E", "end":"G"},
-              {"shelf_num" : "3", "category": "CS", "start" :"A", "end":"D"},
-              {"shelf_num" : "4", "category": "CS", "start" :"H", "end":"Z"}
-
-            
+              {"shelf_num" : "1", "category": "Apple", "start" :"A", "end":"J"},
+              {"shelf_num" : "2", "category": "Apple", "start" :"K", "end":"P"},
+              {"shelf_num" : "3", "category": "Apple", "start" :"P", "end":"T"},
+              {"shelf_num" : "4", "category": "Apple", "start" :"T", "end":"Z"},
+              {"shelf_num" : "5", "category": "CS", "start" :"A", "end":"G"},
+              {"shelf_num" : "6", "category": "CS", "start" :"H", "end":"P"},
+              {"shelf_num" : "7", "category": "CS", "start" :"R", "end":"Z"}
           ]
         }
       },
-     { 
+      {
         "object": "Cabinet",
-        "cabinet_num":"2",                                                             
+        "cabinet_num":"2",
         "geometry": {
-          "coordinates": [[400.0, 10.0], [1000.0,10.0], [1000.0,50.0], [400.0, 50.0]]
+          "coordinates": [
+            [0.2125, 0],
+            [0.425, 0],
+            [0.425,0.035],
+            [0.2125, 0.035]
+          ]
         },
         "properties": {
           "shelf": [
-            
-              {"shelf_num" : "1", "category": "HCI", "start" :"K", "end":"Z"},
-              {"shelf_num" : "2", "category": "EE", "start" :"A", "end":"Z"},
-              {"shelf_num" : "3", "category": "Math", "start" :"A", "end":"Z"},
-              {"shelf_num" : "4", "category": "Apple", "start" :"A", "end":"D"}
-            
-            
+              {"shelf_num" : "1", "category": "Apple", "start" :"A", "end":"J"},
+              {"shelf_num" : "2", "category": "Apple", "start" :"K", "end":"P"},
+              {"shelf_num" : "3", "category": "Apple", "start" :"P", "end":"T"},
+              {"shelf_num" : "4", "category": "Apple", "start" :"T", "end":"Z"}
+          ]
+        }
+      },
+      {
+        "object": "Cabinet",
+        "cabinet_num":"3",
+        "geometry": {
+          "coordinates": [
+            [0.425, 0],
+            [0.6375, 0],
+            [0.6375,0.035],
+            [0.425, 0.035]
+          ]
+        },
+        "properties": {
+          "shelf": [
+              {"shelf_num" : "1", "category": "Apple", "start" :"A", "end":"J"},
+              {"shelf_num" : "2", "category": "Apple", "start" :"K", "end":"P"},
+              {"shelf_num" : "3", "category": "Apple", "start" :"P", "end":"T"},
+              {"shelf_num" : "4", "category": "Apple", "start" :"T", "end":"Z"}
+          ]
+        }
+      },
+      {
+        "object": "Cabinet",
+        "cabinet_num":"4",
+        "geometry": {
+          "coordinates": [
+            [0.6375, 0],
+            [0.85, 0],
+            [0.85,0.05],
+            [0.6375, 0.05]
+          ]
+        },
+        "properties": {
+          "shelf": [
+              {"shelf_num" : "1", "category": "Apple", "start" :"A", "end":"J"},
+              {"shelf_num" : "2", "category": "Apple", "start" :"K", "end":"P"},
+              {"shelf_num" : "3", "category": "Apple", "start" :"P", "end":"T"},
+              {"shelf_num" : "4", "category": "Apple", "start" :"T", "end":"Z"},
+              {"shelf_num" : "5", "category": "CS", "start" :"A", "end":"G"},
+              {"shelf_num" : "6", "category": "CS", "start" :"H", "end":"P"},
+              {"shelf_num" : "7", "category": "CS", "start" :"R", "end":"Z"}
+          ]
+        }
+      },
+      {
+        "object": "Cabinet",
+        "cabinet_num":"5",
+        "geometry": {
+          "coordinates": [
+            [0.85, 0],
+            [1.0625, 0],
+            [1.0625,0.05],
+            [0.85, 0.05]
+          ]
+        },
+        "properties": {
+          "shelf": [
+              {"shelf_num" : "1", "category": "Apple", "start" :"A", "end":"J"},
+              {"shelf_num" : "2", "category": "Apple", "start" :"K", "end":"P"},
+              {"shelf_num" : "3", "category": "Apple", "start" :"P", "end":"T"},
+              {"shelf_num" : "4", "category": "Apple", "start" :"T", "end":"Z"},
+              {"shelf_num" : "5", "category": "CS", "start" :"A", "end":"G"},
+              {"shelf_num" : "6", "category": "CS", "start" :"H", "end":"P"},
+              {"shelf_num" : "7", "category": "CS", "start" :"R", "end":"T"},
+              {"shelf_num" : "8", "category": "CS", "start" :"T", "end":"Z"}
+
+          ]
+        }
+      },
+      {
+        "object": "Cabinet",
+        "cabinet_num":"6",
+        "geometry": {
+          "coordinates": [
+            [1.0625, 0],
+            [1.275, 0],
+            [1.275,0.05],
+            [1.0625, 0.05]
+          ]
+        },
+        "properties": {
+          "shelf": [
+              {"shelf_num" : "1", "category": "Mathematics", "start" :"A", "end":"J"},
+              {"shelf_num" : "2", "category": "Mathematics", "start" :"K", "end":"P"},
+              {"shelf_num" : "3", "category": "Mathematics", "start" :"P", "end":"T"},
+              {"shelf_num" : "4", "category": "Mathematics", "start" :"T", "end":"Z"},
+              {"shelf_num" : "5"},
+              {"shelf_num" : "6" , "category": "Mathematics"},
+              {"shelf_num" : "7"},
+              {"shelf_num" : "8", "start" :"T", "end": "Z"}
           ]
         }
       }

@@ -60,21 +60,22 @@ var hoverObjects = [];
 var data;
 var canvas;
 var cabinetSearched, shelfSearched;
+var hScale, wScale;
 var buildCanvas = function(data) {
     canvas = document.getElementById("floorCanvas");
     stage = new createjs.Stage(canvas);
     data = data;
-   
+    hScale = 1000  / data.features[0].properties.height, wScale = 1500 / data.features[0].properties.width;
     var rect = new createjs.Shape();
-    rect.graphics.setStrokeStyle(0.2).beginFill("#fff").beginStroke("rgba(0,0,0,1)").drawRect(2, 2, data.features[0].properties.length,  data.features[0].properties.breadth);
+    rect.graphics.setStrokeStyle(0.2).beginFill("#fff").beginStroke("rgba(0,0,0,1)").drawRect(2, 2, 1500,  1000);
     stage.addChild(rect);
     stage.enableMouseOver(20); 
 
     var currentLocation = new createjs.Bitmap("../static/location2.png");
     stage.addChild(currentLocation);
 
-    currentLocation.x = data.features[1].properties.x;
-    currentLocation.y = data.features[1].properties.y;
+    currentLocation.x = wScale * data.features[1].properties.x;
+    currentLocation.y = hScale * data.features[1].properties.y;
     currentLocation.name = "my_loc";
     currentLocation.scaleX = .5;
     currentLocation.scaleY = .5;
@@ -93,7 +94,7 @@ var buildCanvas = function(data) {
       if(data.features[i].object === "Cabinet") {
             var polygon = new createjs.Shape();
            
-            polygon.graphics.moveTo(geometry.coordinates[0][0], geometry.coordinates[0][1]);
+            polygon.graphics.moveTo(geometry.coordinates[0][0] * wScale, geometry.coordinates[0][1]* hScale);
             polygon.graphics.setStrokeStyle(0.5).beginStroke("rgba(0,0,0,1)");
             if(cabinetSearched == data.features[i].cabinet_num) {
               polygon.graphics.beginFill("#034f84");
@@ -108,12 +109,16 @@ var buildCanvas = function(data) {
             else {
               if(cabinetSearched !==undefined) {
                 polygon.alpha = 0.4;
+                  var d = document.getElementById('info_obj');
+                  var p = d.getElementsByTagName('p')[0];
+
+                  p.innerHTML = "The highlighted shelf has your book. Go see it by clicking on it";
               }
                polygon.graphics.beginFill("#034f84");
             }
            
             for( var j = geometry.coordinates.length -1; j >= 0; j--) {
-             polygon.graphics.lineTo(geometry.coordinates[j][0], geometry.coordinates[j][1]);
+             polygon.graphics.lineTo(geometry.coordinates[j][0] * wScale, geometry.coordinates[j][1] * hScale);
             }
             polygon.graphics.endFill();
             polygon.name = data.features[i].cabinet_num;
@@ -183,13 +188,19 @@ function handleMouseOver(event) {
    
     for(var i = 0; i < hoverObjects.length; i++) {
         if(hoverObjects[i][0] == event.currentTarget.name) {
-            p.innerHTML = hoverObjects[i][1];
+            var print = hoverObjects[i][1].toString().replace(/,/g, '\n');
+            p.innerHTML = print;
+            
         }
     }
 }
 function handleMouseOut(event) {
-   var title = document.getElementById('info_obj_title');
-    title.style.display = "none";
+    var title = document.getElementById('info_obj_title');
+    //title.style.display = "block";
+      var d = document.getElementById('info_obj');
+      var p = d.getElementsByTagName('p')[0];
+
+      p.innerHTML = "Search your book or hover and click over the cabinet to take you through";
 }
 
 
@@ -290,11 +301,11 @@ function locateShelf() {
     </div>
   </div>
   <div class=" canvas row">
-    <div class=" canvas-container container col-sm-8 col-centered">
-      <div class="container-canvas">
-        <canvas id="floorCanvas" width="1000" height="600"></canvas>
+    <div class=" canvas-container col-md-8 col-centered">
+     
+        <canvas id="floorCanvas" width="1000" height="500"></canvas>
      <!--    <div id="info_obj" class="info_card card_shadow" style="left: 0px; top: 0px; display: none;"> <p> </p></div> -->
-      </div>
+     
     </div>
    <!-- <div class=" slider col-sm-4 col-centered ">
       <ul class="pagination pagination-div" style="vertical-align:top">
@@ -304,14 +315,14 @@ function locateShelf() {
         <li><a href="#">3</a></li>
       </ul>
     </div> -->
-    <div class="col-sm-4 col-centered" >
-     <div id="info_obj_title" class="info_card" style="display: none;">
+    <div class="col-md-4" >
+     <div id="info_obj_title" class="info_card" style="display: block;">
       <div   class="" >
-        Cabinet Mapping
+        <h4 class="text-center">Cabinet Mapping </h4>
       </div>
       <div  id="info_obj" class="card-block">
         <blockquote class="card-blockquote">
-          <p> Search your book or hovfer and click over the cabinet to take you through</p>
+          <p> Search your book or hover and click over the cabinet to take you through</p>
          <!--  <footer>Someone famous in <cite title="Source Title">Source Title</cite></footer> -->
         </blockquote>
       </div>
