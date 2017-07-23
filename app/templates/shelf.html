@@ -95,7 +95,7 @@ var buildCanvas = function(data) {
                         // document.getElementsByTagName('body')[0].appendChild(iDiv);
                          var foundInfo = document.createElement('div1');
 
-                         if(+shelfNum === k) {
+                         if((+shelfNum === k) &&(cabinetSearched === cabinetSearchedBook)) {
                             iDiv.style.background = "#ff0"; 
                          
                             foundInfo.innerHTML = "Your book is one of those highlighted with yellow";
@@ -155,16 +155,16 @@ var buildCanvas = function(data) {
                         if((cabinetSearchedBook== cabinetSearched) && (shelfNum === k.toString())) {
                             var start = property.shelf[k-1].start.charCodeAt(0);
                             var end = property.shelf[k-1].end.charCodeAt(0);
-                            var range = end - start;
+                            var range = end - start + 1;
                             var bookNameChar = bookName.charCodeAt(0);
-                            var offSet = Math.ceil(bookNameChar - start + 1);
-                            var count = 0;
-                            var booksEachRange = Math.ceil(rcount / range);
+                            var offSet = Math.floor(bookNameChar - start);
+                            var count = 1;
+                            var booksEachRange = Math.floor(rcount / range);
                              for (var b = 0; b < bookCanvas.length; b++) {
                                 if(bookCanvas[b].shelf == k) {
                                         count ++;
                                         if(count >= booksEachRange * offSet) {
-                                            for (var inner = 0; inner < booksEachRange; inner++) {
+                                            for (var inner = 0; inner <= booksEachRange; inner++) {
                                                 var p = bookCanvas[b+inner].polygon;
                                               // p.graphics.clear();
                                                // p.alpha = 0.1;

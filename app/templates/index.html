@@ -28,9 +28,18 @@
 }
 
 var refreshView = function(cabinet_id, shelf_id) {
+  if((cabinet_id === undefined) || (shelf_id === undefined)) {
+    cabinetSearched = "unmapped";
+    shelfSearched = "unmapped";
+  }
+else {
+
   cabinetSearched = cabinet_id;
   shelfSearched = shelf_id;
-  load();
+  
+}
+load();
+
 
 };
 
@@ -103,7 +112,7 @@ var buildCanvas = function(data) {
     
               var d = document.getElementById('info_obj');
               var p = d.getElementsByTagName('p')[0];
-            
+              p.innerHTML = "The highlighted shelf has your book. Go see it by clicking on it";
             
             }
             else {
@@ -112,7 +121,13 @@ var buildCanvas = function(data) {
                   var d = document.getElementById('info_obj');
                   var p = d.getElementsByTagName('p')[0];
 
-                  p.innerHTML = "The highlighted shelf has your book. Go see it by clicking on it";
+                
+              }
+               if((cabinetSearched =="unmapped") ||(shelfSearched === "unmapped")) {
+                 var p = d.getElementsByTagName('p')[0];
+
+                 p.innerHTML = "Oops. Your book hasn't been mapped to the database. Go bug your admin";
+                
               }
                polygon.graphics.beginFill("#034f84");
             }
@@ -132,7 +147,7 @@ var buildCanvas = function(data) {
             });
 
             hoverObjects.push([data.features[i].cabinet_num, arr]);
-
+            stage.update();
             polygon.addEventListener("mouseover", handleMouseOver);
             polygon.addEventListener("mouseout", handleMouseOut);
             polygon.addEventListener("click", handleMouseClick);
@@ -219,11 +234,12 @@ function locateShelf() {
       if(obj.category == category) {
         var b = bookName.charAt(0);
         if((obj.start <= bookName.charAt(0)) && (bookName.charAt(0) <= obj.end )) {
-            refreshView(obj.cabinet_num, obj.shelf_num);
+             return refreshView(obj.cabinet_num, obj.shelf_num);
         }
       }
 
    };
+   return refreshView();
   
 }
 
