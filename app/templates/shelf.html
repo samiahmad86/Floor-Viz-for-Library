@@ -129,7 +129,12 @@ var buildCanvas = function(data) {
                                             for (var inner = 0; inner < booksEachRange; inner++) {
                                                 var p = bookCanvas[b+inner].polygon;
                                               // p.graphics.clear();
-                                               p.alpha = 0.1;
+
+                                               // var c = canvas.getContext('2d');
+                                               // c.globalAlpha   = 0.5;
+                                               p.fillOpacity=0.5;
+                                               p.graphics._fill.style = "#000";
+                                               p.graphics.setStrokeStyle(5).beginStroke("rgba(0,0,0,1)");
                                                 stage.update();
                                             };
                                             break;
@@ -178,7 +183,9 @@ function shelfHasBook (shelf_num) {
 function getRandomColor() {
  var colorList = ['#1A237E','#0D47A1','#00695C','#B71c1c','#F57F17','#3E2723','#1A237E','#0D47A1','#00695C','#B71c1c','#F57F17','#3E2723'];
   var random = Math.floor(Math.random() * (11 - 0) + 0);
-  return colorList[random];
+ 
+ return colorList[random];
+
 }
 function handleMouseOver(event) {
     var d = document.getElementById('info_obj');

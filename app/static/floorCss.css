@@ -1,15 +1,13 @@
 body{
-  background-image:url(../static/03.png);
-
-   background-repeat:no-repeat;
-
-   background-size:cover;
+  background-image:url(../static/ijo8Kek.jpg);
+/* Full height */
+    height: 100%; 
+    /* Center and scale the image nicely */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
-canvas{
- /* background-color: #fff;*/
-  /*background-image: url(../static/3.jpg);*/
-}
 .container-main {
                 margin-top: 75px;
 
@@ -23,6 +21,7 @@ canvas{
   margin: 1rem;
   position: relative;
   padding: 10px;
+<<<<<<< HEAD
 }
 
 .card {
@@ -34,6 +33,7 @@ canvas{
 .card:hover {
     box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
 }
+
 
 .container {
     padding: 2px 16px;

@@ -60,11 +60,13 @@ var hoverObjects = [];
 var data;
 var canvas;
 var cabinetSearched, shelfSearched;
+var heightScale, breadthScale;
 var buildCanvas = function(data) {
     canvas = document.getElementById("floorCanvas");
     stage = new createjs.Stage(canvas);
     data = data;
-   
+    heightScale = 1500/data.features[0].properties.length;
+    breadthScale=1000/data.features[0].properties.breadth;
     var rect = new createjs.Shape();
     rect.graphics.setStrokeStyle(0.2).beginFill("#fff").beginStroke("rgba(0,0,0,1)").drawRect(2, 2, data.features[0].properties.length,  data.features[0].properties.breadth);
     stage.addChild(rect);
@@ -93,7 +95,7 @@ var buildCanvas = function(data) {
       if(data.features[i].object === "Cabinet") {
             var polygon = new createjs.Shape();
            
-            polygon.graphics.moveTo(geometry.coordinates[0][0], geometry.coordinates[0][1]);
+            polygon.graphics.moveTo(geometry.coordinates[0][0]*heightScale, geometry.coordinates[0][1]*breadthScale);
             polygon.graphics.setStrokeStyle(0.5).beginStroke("rgba(0,0,0,1)");
             if(cabinetSearched == data.features[i].cabinet_num) {
               polygon.graphics.beginFill("#034f84");
@@ -106,14 +108,19 @@ var buildCanvas = function(data) {
             
             }
             else {
+
               if(cabinetSearched !==undefined) {
                 polygon.alpha = 0.4;
               }
+
+             
+                polygon.alpha = 0.4;
+        
                polygon.graphics.beginFill("#034f84");
             }
            
             for( var j = geometry.coordinates.length -1; j >= 0; j--) {
-             polygon.graphics.lineTo(geometry.coordinates[j][0], geometry.coordinates[j][1]);
+             polygon.graphics.lineTo(geometry.coordinates[j][0]*heightScale, geometry.coordinates[j][1]*breadthScale);
             }
             polygon.graphics.endFill();
             polygon.name = data.features[i].cabinet_num;
