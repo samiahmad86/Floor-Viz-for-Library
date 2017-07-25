@@ -7,12 +7,30 @@ body{
 }
 
 canvas{
- /* background-color: #fff;*/
-  /*background-image: url(../static/3.jpg);*/
+  animation: 1s ease-out 0s 1 slideInFromLeft;
+
 }
 .container-main {
                 margin-top: 75px;
 
+}
+
+@keyframes slideInFromLeft {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInFromRight{
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(0);
+  }
 }
 
 
@@ -24,8 +42,31 @@ canvas{
   word-wrap: break-word;
   position: relative;
   padding: 10px;
+
+  animation: 0.5s ease-out 0s 1 slideInFromRight;
 }
 
+.info_legend {
+  background: #fff;
+  border-radius: 0px;
+  margin-left: 20px;
+   
+
+  padding: 10px;
+  position: absolute;
+    bottom: 0;
+
+  animation: 0.5s ease-out 0s 1 slideInFromRight;
+}
+
+
+
+
+p {
+    
+  word-wrap: break-word;
+ 
+}
 .card {
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
     transition: 0.3s;
@@ -46,6 +87,7 @@ canvas{
 .search-bar-container {
   padding-bottom: 20px
   width: 1000px;
+  animation: 0.5s ease-out 0s 1 slideInFromLeft;
   
 }
 .card_shadow {
@@ -125,6 +167,26 @@ select.drop_down{
   }
 
  select, option { width: 10px; }
+ .row-container {
+    height: 500px;
+    width: 300px;
+    
+
+ }
+
+
+.foo {
+  float: left;
+  width: 20px;
+  height: 20px;
+  margin:-left: 5px;
+  border: 1px solid rgba(0, 0, 0, .2);
+}
+
+.blue {
+  background: #034f84;
+}
+
   /*.canvas-container {
 
     height: 600px;

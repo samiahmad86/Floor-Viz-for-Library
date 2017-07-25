@@ -141,11 +141,8 @@
               {"shelf_num" : "1", "category": "Mathematics", "start" :"A", "end":"J"},
               {"shelf_num" : "2", "category": "Mathematics", "start" :"K", "end":"P"},
               {"shelf_num" : "3", "category": "Mathematics", "start" :"P", "end":"T"},
-              {"shelf_num" : "4", "category": "Mathematics", "start" :"T", "end":"Z"},
-              {"shelf_num" : "5"},
-              {"shelf_num" : "6" , "category": "Mathematics"},
-              {"shelf_num" : "7"},
-              {"shelf_num" : "8", "start" :"T", "end": "Z"}
+              {"shelf_num" : "4", "category": "Mathematics", "start" :"T", "end":"Z"}
+             
           ]
         }
       }

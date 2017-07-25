@@ -156,7 +156,7 @@ var buildCanvas = function(data) {
                             var start = property.shelf[k-1].start.charCodeAt(0);
                             var end = property.shelf[k-1].end.charCodeAt(0);
                             var range = end - start + 1;
-                            var bookNameChar = bookName.charCodeAt(0);
+                            var bookNameChar = bookName.toUpperCase().charCodeAt(0);
                             var offSet = Math.floor(bookNameChar - start);
                             var count = 1;
                             var booksEachRange = Math.floor(rcount / range);
@@ -164,6 +164,7 @@ var buildCanvas = function(data) {
                                 if(bookCanvas[b].shelf == k) {
                                         count ++;
                                         if(count >= booksEachRange * offSet) {
+                                          var bookArr= [];
                                             for (var inner = 0; inner <= booksEachRange; inner++) {
                                                 var p = bookCanvas[b+inner].polygon;
                                               // p.graphics.clear();
@@ -173,12 +174,41 @@ var buildCanvas = function(data) {
                                                var h =p.graphics.instructions[1].h;
                                                var w =p.graphics.instructions[1].w;
 
-                                             p.graphics.clear().beginFill("#ff0").setStrokeStyle(1).beginStroke("rgba(0,0,0)")
+                                               p.graphics.clear().beginStroke("#ff0").beginFill("#ff0").setStrokeStyle(3)
                                                                .drawRect(x, y, w, h).endFill();
-
+                                              bookArr.push(p);
                                               stage.update();
                                             };
-                                            break;
+
+
+                                             createjs.Ticker.addEventListener("tick", tick);
+                                             createjs.Ticker.setInterval(100);
+                                             var alpha = 0.2;
+
+                                             function tick() { 
+                                              
+                                              for(var book =0; book<bookArr.length; book++) {
+
+                                               var p = bookArr[book];
+                                                                   
+
+                                                p.alpha = alpha;
+                                                stage.update();
+                                                
+                                               
+                                              }
+
+                                              if(alpha < 1) {
+                                                   alpha = alpha + 0.1;
+                                                }
+                                                if(alpha > 1) {
+                                                  alpha = 0.1;
+                                                 // p.alpha = 0.1;
+                                                }
+                                            }
+                                       
+                                         
+                                          break;
                                         }
                                 }
                              };

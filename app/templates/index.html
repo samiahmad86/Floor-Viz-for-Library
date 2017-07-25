@@ -76,7 +76,7 @@ var buildCanvas = function(data) {
     data = data;
     hScale = 1000  / data.features[0].properties.height, wScale = 1500 / data.features[0].properties.width;
     var rect = new createjs.Shape();
-    rect.graphics.setStrokeStyle(0.2).beginFill("#fff").beginStroke("rgba(0,0,0,1)").drawRect(2, 2, 1500,  1000);
+    rect.graphics.setStrokeStyle(0.2).beginFill("#fff0e2").beginStroke("rgba(0,0,0,1)").drawRect(0, 0, 1500,  1000);
     stage.addChild(rect);
     stage.enableMouseOver(20); 
 
@@ -104,7 +104,7 @@ var buildCanvas = function(data) {
             var polygon = new createjs.Shape();
            
             polygon.graphics.moveTo(geometry.coordinates[0][0] * wScale, geometry.coordinates[0][1]* hScale);
-            polygon.graphics.setStrokeStyle(0.5).beginStroke("rgba(0,0,0,1)");
+            polygon.graphics.setStrokeStyle(3).beginStroke("rgba(0,0,0,1)");
             if(cabinetSearched == data.features[i].cabinet_num) {
               polygon.graphics.beginFill("#034f84");
                var title = document.getElementById('info_obj_title');
@@ -203,7 +203,7 @@ function handleMouseOver(event) {
    
     for(var i = 0; i < hoverObjects.length; i++) {
         if(hoverObjects[i][0] == event.currentTarget.name) {
-            var print = hoverObjects[i][1].toString().replace(/,/g, '\n');
+            var print = '\u2022' + hoverObjects[i][1].toString().split(",").join("<br />\t\u2022");
             p.innerHTML = print;
             
         }
@@ -233,7 +233,7 @@ function locateShelf() {
       var obj = JSON.parse(value);
       if(obj.category == category) {
         var b = bookName.charAt(0);
-        if((obj.start <= bookName.charAt(0)) && (bookName.charAt(0) <= obj.end )) {
+        if((obj.start <= bookName.toUpperCase().charAt(0)) && (bookName.toUpperCase().charAt(0) <= obj.end )) {
              return refreshView(obj.cabinet_num, obj.shelf_num);
         }
       }
@@ -316,7 +316,7 @@ function locateShelf() {
       </div>
     </div>
   </div>
-  <div class=" canvas row">
+  <div class=" canvas row row-eq-height">
     <div class=" canvas-container col-md-8 col-centered">
      
         <canvas id="floorCanvas" width="1000" height="500"></canvas>
@@ -331,7 +331,7 @@ function locateShelf() {
         <li><a href="#">3</a></li>
       </ul>
     </div> -->
-    <div class="col-md-4" >
+    <div class="col-md-4 row-container" >
      <div id="info_obj_title" class="info_card" style="display: block;">
       <div   class="" >
         <h4 class="text-center">Cabinet Mapping </h4>
@@ -343,6 +343,17 @@ function locateShelf() {
         </blockquote>
       </div>
      </div>
+      <div id="" class="info_legend" style="width: 250px; overflow: hidden;">
+     
+      <div  id="" >
+       <div class="foo blue"></div>
+       <div class="" style="margin-left: 50px;">Shelf</div>
+       <br>
+       <img class="foo" src="../static/location2.png">
+       <div class="" style="margin-left: 50px;">Your current position</div>
+      </div>
+     </div>
+
     </div>
   </div>
 
