@@ -110,7 +110,11 @@
               {"shelf_num" : "1", "category": "History", "start" :"A", "end":"J"},
               {"shelf_num" : "2", "category": "History", "start" :"K", "end":"P"},
               {"shelf_num" : "3", "category": "History", "start" :"P", "end":"T"},
-              {"shelf_num" : "4", "category": "History", "start" :"T", "end":"Z"}
+              {"shelf_num" : "4", "category": "History", "start" :"T", "end":"Z"},
+              {"shelf_num" : "5", "category": "SoftSkills", "start" :"A", "end":"J"},
+              {"shelf_num" : "6", "category": "SoftSkills", "start" :"K", "end":"Z"},
+              {"shelf_num" : "7", "category": "FTD", "start" :"A", "end":"T"},
+              {"shelf_num" : "8", "category": "FTD", "start" :"T", "end":"Z"}
           ]
         }
       }
