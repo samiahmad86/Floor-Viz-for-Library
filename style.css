@@ -1,0 +1,84 @@
+.container {
+  width: 200px;
+  height: 200px;
+  position: relative;
+  perspective: 1000px;
+}
+
+#shelf {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  transform-style: preserve-3d;
+}
+
+
+ figure {
+  margin: 0;
+  display: block;
+  position: absolute;
+  border: 2px solid black;
+}
+
+.front,
+.back {
+  width: 296px;
+  height: 196px;
+}
+
+.right,
+.left {
+  width: 96px;
+  height: 196px;
+  left: 100px;
+}
+
+.top,
+.bottom {
+  width: 296px;
+  height: 96px;
+  top: 50px;
+}
+
+.front {
+    background: grey;
+}
+
+ .back {
+    background: red;
+}
+
+ .bottom {
+    background: blue;
+}
+
+ .right {
+    background: green;
+}
+
+ .left {
+    background: yellow;
+}
+
+ .top {
+    background: orange;
+}
+ .front  { transform: rotateY(   45deg ) translateZ(  50px ); }
+ .back   { transform: rotateY( -135deg ) translateZ(  50px ); }
+ .right  { transform: rotateY(  135deg ) translateZ( 150px ); }
+ .left   { transform: rotateY( -45deg ) translateZ( 150px ); }
+ .top    { transform: rotateY(  45deg )rotateX( 90deg ) translateZ( 100px ); }
+ .bottom { transform: rotateY( 45deg )rotateX( -90deg ) translateZ( 100px ); }
+
+#shelf { transform: translateY( 200px )  translateZ( -200px ); }
+
+
+
+
+/*Drawing shelf */
+
+
+
+
+
+
