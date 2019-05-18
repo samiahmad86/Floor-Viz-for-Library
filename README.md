@@ -12,5 +12,6 @@ The backend API runs in Django Python.
 Client communicates the server for each request when the book is searches, and the resulting coordinates are fetched and rendered in the canvas.
 
 Demo:
+https://mellet-library.herokuapp.com/
 
 ![](desc.gif)
